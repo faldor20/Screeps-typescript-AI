@@ -28,6 +28,10 @@ function mainLoop() {
        // }
       }
       else
+      if (creepMemory.rol=="harvester") {
+        Memory.harvesterCount++;
+        }
+      else
       if (creepMemory.role=="builder") {
         Memory.builderCount--;
       }
@@ -66,10 +70,13 @@ function mainLoop() {
       sourceScanner.scanRoom(room);
     }
     // console.log(room);
-    if (room.energyAvailable == 300) {
+    if (room.energyAvailable == 300&&Game.spawns["Sp1"].recycleCreep) {
     }
-      if (room.memory.harvestPoints.free.length>0) {
-       Game.spawns["Sp1"].spawnCreep([WORK, MOVE, CARRY, WORK], "Harvester" +Game.time, { memory: { worker: { targetobjectID:"" }, role: "harvester" } });
+      if (room.memory.harvestPoints.free.length>0&&Memory.harvesterCount) {
+        if (Game.spawns["Sp1"].spawnCreep([WORK, MOVE, CARRY, WORK], "Harvester" + Game.time, { memory: { worker: { targetobjectID: "" }, role: "harvester" } }))
+        {
+          Memory.upgraderCount++;
+         }
       //room.memory.harvesterCount++;
       }
       else if (Memory.upgraderCount<3) {

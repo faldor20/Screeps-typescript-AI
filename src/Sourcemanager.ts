@@ -1,4 +1,9 @@
- export function scanRoom(room: Room) {
+import { harvestAction } from "creeps.jobs";
+
+export function scanRoom(room: Room) {
+  room.memory = Memory.rooms[room.name];
+  room.memory.harvestPoints = { free: [], taken: [], count: 0 };
+  room.memory.jobs = { build: [], harvest: [],upgrade:[],repair:[] };
     let sources: Source[] = room.find(FIND_SOURCES);
      let jobs:string[]=[];
     sources.forEach(source => {
@@ -26,16 +31,23 @@
      //   souceinfo[i] = new sourceInfo(source.id, collectionSpotCount, 0);
      });
      console.log("scannig room:" + room.name);
-     room.memory.harvestPoints
-         = { free: jobs, taken: [] };
+    /*  room.memory.harvestPoints
+         = { free: jobs, taken: [] }; */
+   //let
+   room.memory.harvestPoints.free = jobs;
+   room.memory.harvestPoints.count = jobs.length;
+   room.memory.jobs.build = [];
+   room.memory.jobs.harvest = [];
+   room.memory.jobs.upgrade = [];
+   room.memory.jobs.repair = [];
 }
-  class jobs {
+  /* class jobs {
       constructor(sourceID:string,collectionPoints:number,currentlyCollecting:number) {
         let sourceid:string = sourceID;
         let collectionpoints: number = collectionPoints;
         let currentlycollecting:number = currentlyCollecting;
       }
-}
+} */
 interface sourceJobs
 {
     free: string[];

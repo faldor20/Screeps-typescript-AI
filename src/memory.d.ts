@@ -1,31 +1,37 @@
+import { creepTypes } from "creeps.jobs";
+
 interface CreepMemory {
-/*     worker?: {
+  /*     worker?: {
         targetobjectID: string
     } */
-    job?:Job
+  job?: Job;
   //  role: string
 
-    type: creepType
-    [name: string]: any
+  type: creepType;
+  [name: string]: any;
 }
-interface FlagMemory { [name: string]: any }
-interface SpawnMemory { [name: string]: any }
+interface FlagMemory {
+  [name: string]: any;
+}
+interface SpawnMemory {
+  [name: string]: any;
+}
 interface RoomMemory {
-    jobs: {
-        //object id of job taget
-        harvest: Job[],
-        build: Job[],
-        repair: Job[],
-        upgrade:Job[],
-    }
-    [name: string]: any
-    harvestPoints: { free:string[],taken:string[] ,count:number}
+  jobs: {
+    //object id of job taget
+    harvest: Job[];
+    build: Job[];
+    repair: Job[];
+    upgrade: Job[];
+  };
+  harvestPoints: { free: string[]; taken: string[]; count: number };
+  [name: string]: any;
 }
 /*  interface creepType
 {
     priority:jobType[];
 } */
-declare type jobType =
+/* declare type jobType =
     JOB_HARVEST |
     JOB_BUILD |
     JOB_UPGRADE |
@@ -34,22 +40,20 @@ declare type jobType =
 type JOB_HARVEST = 'harvest';
 type JOB_BUILD = 'build';
 type JOB_REPAIR = 'repair';
-type JOB_UPGRADE = 'upgrade';
-interface creepType
-{
-    jobTypePriority:jobType[];
+type JOB_UPGRADE = 'upgrade'; */
+
+interface creepType {
+  jobTypePriority: jobType[];
 }
-/* interface jobType
-{
-    creepAction: Function
-    //targetobjectID: string
-} */
-interface Job
-{
-    targetobjectId: string;
-    jobaction(targetID: string, creep: Creep):void
- }
-/* interface harvest extends jobType
+interface jobType {
+  creepAction: Function;
+  //targetobjectID: string
+}
+interface Job {
+  targetobjectId: string;
+  jobaction(targetID: string, creep: Creep): void;
+}
+/*  interface harvestJob extends job
 {
     harvestaction(params:string):boolean
 }
@@ -67,4 +71,3 @@ interface creepAction
 
 }
  */
-

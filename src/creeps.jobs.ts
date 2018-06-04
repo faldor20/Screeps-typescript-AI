@@ -1,15 +1,50 @@
 import { Dictionary } from "lodash";
+import { jobType, Job } from "memory";
+import { run } from "../.history/src/role.upgrader_20180531115439";
 
-const JOB_HARVEST: jobType = "harvest";
+/* const JOB_HARVEST: jobType = "harvest";
 const JOB_BUILD: jobType = "build";
 const JOB_UPGRADE: jobType = "upgrade";
 const JOB_REPAIR: jobType = "repair";
 type jobType = JOB_HARVEST | JOB_BUILD | JOB_UPGRADE | JOB_REPAIR;
-
 type JOB_HARVEST = "harvest";
 type JOB_BUILD = "build";
 type JOB_REPAIR = "repair";
-type JOB_UPGRADE = "upgrade";
+type JOB_UPGRADE = "upgrade"; */
+const JOB_HARVEST: jobType = { creepAction: harvestAction };
+
+class harvestJob implements Job {
+  constructor(objectid: string) {
+    this.targetobjectId = objectid;
+  }
+  Do(creep: Creep) {
+    this.jobaction(this.targetobjectId, creep);
+  }
+  targetobjectId: string;
+  jobaction = harvestAction;
+}
+class buildJob implements Job {
+  constructor(objectid: string) {
+    this.targetobjectId = objectid;
+  }
+  Do(creep: Creep) {
+    this.jobaction(this.targetobjectId, creep);
+  }
+  //make a new fucntion here taht does build action and takes the targetobject id and does it
+  targetobjectId: string;
+  jobaction = buildAction;
+}
+class upgradeJob implements Job {
+  constructor(objectid: string) {
+    this.targetobjectId = objectid;
+  }
+  Do(creep: Creep) {
+    this.jobaction(this.targetobjectId, creep);
+  }
+  targetobjectId: string;
+  jobaction = upgradeAction;
+}
+
 export namespace creepTypes {
   export const harvester: creepType = {
     jobTypePriority: [JOB_HARVEST, JOB_BUILD, JOB_REPAIR, JOB_UPGRADE]
@@ -29,14 +64,13 @@ export function harvestAction(targetID: string, creep: Creep) {
   if (creep.carry.energy < creep.carryCapacity) {
     let creepmem: CreepMemory = creep.memory;
     let source: Source | null = Game.getObjectById(targetID);
-      if (source != null) {
-          console.log(creep.harvest(source));
+    if (source != null) {
+      console.log(creep.harvest(source));
       //  console.log("harvester found source");
       if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
         console.log("harvester moving");
         creep.moveTo(source.pos, { visualizePathStyle: { stroke: "#ffaa00" } });
-        }
-      else {
+      } else {
         console.log("harvester harvested");
       }
     } else {
@@ -57,6 +91,7 @@ export function harvestAction(targetID: string, creep: Creep) {
       }
     });
     if (targets.length > 0) {
+      creep.transfer(targets[0], RESOURCE_ENERGY);
       if (creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
         creep.moveTo(targets[0], { visualizePathStyle: { stroke: "#ffffff" } });
       }

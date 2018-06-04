@@ -1,4 +1,4 @@
-import * as rolebuilder from"./role.builder"
+import * as rolebuilder from "./role.builder";
 /** @param {Creep} creep **/
 export function run(creep: Creep) {
   //console.log("running harvester code");
@@ -14,7 +14,7 @@ export function run(creep: Creep) {
           creep.moveTo(source, { visualizePathStyle: { stroke: "#ffaa00" } });
         }
       } else {
-        assignHarvester(creep,creepmem);
+        assignHarvester(creep, creepmem);
       }
     }
   } else {
@@ -34,9 +34,7 @@ export function run(creep: Creep) {
     if (targets.length > 0) {
       if (creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
         creep.moveTo(targets[0], { visualizePathStyle: { stroke: "#ffffff" } });
-      }
-      else
-      {
+      } else {
         creep.memory.role = "builder";
       }
     }

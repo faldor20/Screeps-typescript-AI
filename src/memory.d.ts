@@ -1,5 +1,3 @@
-import { creepTypes } from "creeps.jobs";
-
 interface CreepMemory {
   /*     worker?: {
         targetobjectID: string
@@ -17,13 +15,7 @@ interface SpawnMemory {
   [name: string]: any;
 }
 interface RoomMemory {
-  jobs: {
-    //object id of job taget
-    harvest: Job[];
-    build: Job[];
-    repair: Job[];
-    upgrade: Job[];
-  };
+  jobs: { [key: string]: Job[] };
   harvestPoints: { free: string[]; taken: string[]; count: number };
   [name: string]: any;
 }
@@ -43,15 +35,15 @@ type JOB_REPAIR = 'repair';
 type JOB_UPGRADE = 'upgrade'; */
 
 interface creepType {
-  jobTypePriority: jobType[];
+  jobTypePriority: string[];
 }
-interface jobType {
+/* interface jobType {
   creepAction: Function;
   //targetobjectID: string
-}
+} */
 interface Job {
   targetobjectId: string;
-  jobaction(targetID: string, creep: Creep): void;
+  jobaction(creep: Creep): void;
 }
 /*  interface harvestJob extends job
 {

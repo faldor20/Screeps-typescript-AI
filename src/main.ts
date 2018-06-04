@@ -3,6 +3,7 @@ import * as roleUpgrader from "./role.upgrader";
 import * as roleHarvester from "./role.harvester";
 import * as roleBuilder from "./role.builder";
 import { creepTypes, harvestAction, buildAction } from "creeps.jobs";
+import { RoomMemory } from "./memory";
 //import * as toolsourceScanner from "./tool.sourceScanner";
 //import { ErrorMapper } from "utils/ErrorMapper";
 //let roleHarvester = require('role.harvester');
@@ -77,9 +78,8 @@ function mainLoop() {
   for (let name in Game.rooms) {
     let room = Game.rooms[name];
 
-
-
     let roomMem = room.memory;
+    room.memory.
     roomMem.jobs.harvest.forEach(harvest => {
       harvest.jobaction = harvestAction;
     });
@@ -98,9 +98,9 @@ function mainLoop() {
           });
           roomMem.jobs.build = newsites;
         }
+      } else {
+        console.log("jobs mem doesnt exist");
       }
-      else {
-        console.log("jobs mem doesnt exist"); }
     }
     if (roomMem.harvestPoints == null) {
       sourceScanner.scanRoom(room);
@@ -122,7 +122,10 @@ function mainLoop() {
     // console.log(room);
     if (room.energyAvailable == 300) {
     }
-    if (roomMem.harvestPoints.free.length > 0 && Memory.harvesterCount < roomMem.harvestPoints.count) {
+    if (
+      roomMem.harvestPoints.free.length > 0 &&
+      Memory.harvesterCount < roomMem.harvestPoints.count
+    ) {
       if (
         Game.spawns["Sp1"].spawnCreep(
           [WORK, MOVE, CARRY, WORK],
@@ -163,8 +166,9 @@ function mainLoop() {
       ) {
         Memory.builderCount++;
       }
+    } else {
+      console.log("no creeps spawned");
     }
-    else {console.log("no creeps spawned") }
   }
 }
 /* Object.defineProperty(Source.prototype, 'memory', {

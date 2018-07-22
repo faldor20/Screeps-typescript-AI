@@ -1,27 +1,17 @@
 {
-  "extends": [
-    "tslint:recommended",
-    "tslint-config-prettier",
-    "tslint-config-airbnb"
-  ],
+  "extends": ["tslint:recommended", "tslint-config-prettier", "tslint-config-airbnb"],
   "defaultSeverity": "warning",
   "rules": {
-    "triple-equals:false",
+    "triple-equals": false,
     "array-type": [false],
     "no-increment-decrement": false,
     "forin": false,
-"max-classes-per-file:false",
+    "max-classes-per-file": false,
     "interface-name": [true, "never-prefix"],
     "member-ordering": [false],
     "no-console": [false],
     "no-namespace": [false, "allow-declarations"],
     "trailing-comma": [true, { "multiline": "never", "singleline": "never" }],
-    "variable-name": [
-      true,
-      "ban-keywords",
-      "check-format",
-      "allow-pascal-case",
-      "allow-leading-underscore"
-    ]
+    "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case", "allow-leading-underscore"]
   }
 }

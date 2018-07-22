@@ -1,16 +1,10 @@
-import {
-  buildJob,
-  creepTypes,
-  HarvestJob,
-  jobType,
-  upgradeJob
-} from 'creeps.jobs';
+import { buildJob, creepTypes, HarvestJob, jobType, upgradeJob } from "creeps.jobs";
 
-import * as sourceScanner from './Sourcemanager';
-const JOB_HARVEST: jobType = 'harvest';
-const JOB_BUILD: jobType = 'build';
-const JOB_UPGRADE: jobType = 'upgrade';
-const JOB_REPAIR: jobType = 'repair';
+import * as sourceScanner from "./Sourcemanager";
+const JOB_HARVEST: jobType = "harvest";
+const JOB_BUILD: jobType = "build";
+const JOB_UPGRADE: jobType = "upgrade";
+const JOB_REPAIR: jobType = "repair";
 function mainLoop() {
   CleanMemory();
   /*  toolsourceScanner(Game.rooms[0]);*/
@@ -22,23 +16,18 @@ function CheckRooms() {
   for (const name in Game.rooms) {
     const room = Game.rooms[name];
     const roomMem = room.memory;
-    const buildsites: ConstructionSite<
-      BuildableStructureConstant
-    >[] = room.find(FIND_CONSTRUCTION_SITES);
+    const buildsites: ConstructionSite<BuildableStructureConstant>[] = room.find(FIND_CONSTRUCTION_SITES);
     if (buildsites) {
       if (roomMem.jobs !== undefined) {
-        if (
-          buildsites.length > 0 &&
-          buildsites.length !== roomMem.jobs.build.length
-        ) {
+        if (buildsites.length > 0 && buildsites.length !== roomMem.jobs.build.length) {
           const newsites: buildJob[] = [];
-          buildsites.forEach((site) => {
+          buildsites.forEach(site => {
             newsites.push(new buildJob(site.id));
           });
           roomMem.jobs.build = newsites;
         }
       } else {
-        console.log('jobs mem doesnt exist');
+        console.log("jobs mem doesnt exist");
       }
     }
     if (roomMem.jobs[JOB_UPGRADE].length < 3) {
@@ -49,10 +38,7 @@ function CheckRooms() {
     if (roomMem.harvestPoints == null) {
       sourceScanner.scanRoom(room);
     }
-    if (
-      room.energyAvailable < room.energyCapacityAvailable &&
-      roomMem.jobs.harvest.length < roomMem.harvestPoints.count
-    ) {
+    if (room.energyAvailable < room.energyCapacityAvailable && roomMem.jobs.harvest.length < roomMem.harvestPoints.count) {
       const harvistPoint = roomMem.harvestPoints.free.pop();
       if (harvistPoint) {
         //   roomMem.harvestPoints.taken.push(harvistPoint);
@@ -60,52 +46,23 @@ function CheckRooms() {
       }
     }
     // console.log(room);
-    if (
-      roomMem.harvestPoints.free.length > 0 &&
-      Memory.harvesterCount < roomMem.harvestPoints.count
-    ) {
-      if (
-        Game.spawns['Sp1'].spawnCreep(
-          [WORK, MOVE, CARRY, WORK],
-          'Harvester' + Game.time,
-          {
-            memory: { type: creepTypes.harvester }
-          }
-        )
-      ) {
+    if (roomMem.harvestPoints.free.length > 0 && Memory.harvesterCount < roomMem.harvestPoints.count) {
+      if (Game.spawns["Sp1"].spawnCreep([WORK, MOVE, CARRY, WORK], "Harvester" + Game.time, { memory: { type: creepTypes.harvester } })) {
         Memory.upgraderCount++;
       } else {
-        console.log('failed to sapwn harvester');
+        console.log("failed to sapwn harvester");
       }
       // room.memory.harvesterCount++;
     } else if (Memory.upgraderCount < 3) {
-      if (
-        Game.spawns['Sp1'].spawnCreep(
-          [WORK, MOVE, CARRY, WORK],
-          'Upgrader' + Game.creeps,
-          {
-            memory: {
-              type: creepTypes.upgrader
-            }
-          }
-        ) == 0
-      ) {
+      if (Game.spawns["Sp1"].spawnCreep([WORK, MOVE, CARRY, WORK], "Upgrader" + Game.creeps, { memory: { type: creepTypes.upgrader } }) == 0) {
         Memory.upgraderCount++;
       }
     } else if (Memory.builderCount < 2) {
-      if (
-        Game.spawns['Sp1'].spawnCreep(
-          [WORK, MOVE, CARRY, WORK],
-          'Builder' + Game.creeps,
-          {
-            memory: { type: creepTypes.builder }
-          }
-        ) == 0
-      ) {
+      if (Game.spawns["Sp1"].spawnCreep([WORK, MOVE, CARRY, WORK], "Builder" + Game.creeps, { memory: { type: creepTypes.builder } }) == 0) {
         Memory.builderCount++;
       }
     } else {
-      console.log('no creeps spawned');
+      console.log("no creeps spawned");
     }
   }
 }
@@ -115,7 +72,7 @@ function CheckCreeps() {
     if (creep) {
       if (creep.memory.job == null) {
         const jobPriorities: string[] = creep.memory.type.jobTypePriority;
-        jobPriorities.forEach((jobtype) => {
+        jobPriorities.forEach(jobtype => {
           const newjob: Job | undefined = creep.room.memory.jobs[jobtype].pop();
           if (newjob != null) {
             creep.memory.job = newjob;
@@ -138,12 +95,13 @@ function CleanMemory() {
         // if (creepMemory.worker.targetobjectID != "") \
         // spawncreep("Sp1", creepMemory.role, creepMemory.worker.targetobjectID, roo);
         // else {
-        const source: Source | null = Game.getObjectById(
-          creepMemory.worker.targetobjectID
-        ); // its a strong but it throws ana error
+        const source: Source | null = Game.getObjectById(creepMemory.worker.targetobjectID); // its a strong but it throws ana error
         if (source != null) {
           const id: string = source.id;
-          const roomjobs: { free: string[]; taken: string[] } =
+          const roomjobs: {
+            free: string[];
+            taken: string[];
+          } =
             source.room.memory.harvestPoints;
           roomjobs.taken.every((value: string, index: number) => {
             if (id === value) {
@@ -157,10 +115,10 @@ function CleanMemory() {
         }
         // }
       } else if (creepMemory.type === creepTypes.harvester) {
-        Memory.harvesterCount++;
-      } else if (creepMemory.role === creepTypes.builder) {
+        Memory.harvesterCount--;
+      } else if (creepMemory.type === creepTypes.builder) {
         Memory.builderCount--;
-      } else if (creepMemory.role === creepTypes.upgrader) {
+      } else if (creepMemory.type === creepTypes.upgrader) {
         Memory.upgraderCount--;
       }
       /* .log("deleted creep" + name); */

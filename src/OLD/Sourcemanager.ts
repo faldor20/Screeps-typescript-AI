@@ -1,4 +1,4 @@
-import { harvestAction } from "creeps.jobs";
+import { harvestAction } from "OLD/creeps.jobs";
 
 export function scanRoom(room: Room) {
   room.memory = Memory.rooms[room.name];
@@ -9,16 +9,16 @@ export function scanRoom(room: Room) {
     sources.forEach(source => {
       let pos: RoomPosition = source.pos;
         let objectsAround: Terrain[]= [];
-        let roomname: string = source.room.name;
+        let roomName: string = source.room.name;
       let collectionSpotCount: number = 0;
-      objectsAround[0] = Game.map.getTerrainAt(pos.x + 1, pos.y + 1,roomname);
-      objectsAround[2] = Game.map.getTerrainAt(pos.x + 1, pos.y + 0,roomname);
-      objectsAround[1] = Game.map.getTerrainAt(pos.x + 0, pos.y + 1,roomname);
-      objectsAround[3] = Game.map.getTerrainAt(pos.x - 1, pos.y + 1,roomname);
-      objectsAround[4] = Game.map.getTerrainAt(pos.x - 1, pos.y + 0,roomname);
-      objectsAround[5] = Game.map.getTerrainAt(pos.x - 1, pos.y - 1,roomname);
-      objectsAround[6] = Game.map.getTerrainAt(pos.x - 0, pos.y - 1,roomname);
-      objectsAround[7] = Game.map.getTerrainAt(pos.x + 1, pos.y - 1,roomname);
+      objectsAround[0] = Game.map.getTerrainAt(pos.x + 1, pos.y + 1,roomName);
+      objectsAround[2] = Game.map.getTerrainAt(pos.x + 1, pos.y + 0,roomName);
+      objectsAround[1] = Game.map.getTerrainAt(pos.x + 0, pos.y + 1,roomName);
+      objectsAround[3] = Game.map.getTerrainAt(pos.x - 1, pos.y + 1,roomName);
+      objectsAround[4] = Game.map.getTerrainAt(pos.x - 1, pos.y + 0,roomName);
+      objectsAround[5] = Game.map.getTerrainAt(pos.x - 1, pos.y - 1,roomName);
+      objectsAround[6] = Game.map.getTerrainAt(pos.x - 0, pos.y - 1,roomName);
+      objectsAround[7] = Game.map.getTerrainAt(pos.x + 1, pos.y - 1,roomName);
         objectsAround.forEach(spot => {
           if (spot !="wall") {
             collectionSpotCount++;
@@ -30,7 +30,7 @@ export function scanRoom(room: Room) {
     //  room.memory.collectionPoints += collectionSpotCount;
      //   souceinfo[i] = new sourceInfo(source.id, collectionSpotCount, 0);
      });
-     console.log("scannig room:" + room.name);
+     console.log("scanning room:" + room.name);
     /*  room.memory.harvestPoints
          = { free: jobs, taken: [] }; */
    //let

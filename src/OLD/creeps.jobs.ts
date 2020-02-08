@@ -1,8 +1,8 @@
 import { Dictionary } from 'lodash';
-import { run } from '../.history/src/role.upgrader_20180531115439';
-import { harvestAction } from 'action.harvest';
-import { buildAction } from 'action.build';
-import { upgradeAction } from 'action.upgrade';
+import { run } from '../../.history/src/role.upgrader_20180531115439';
+import { harvestAction } from 'OLD/action.harvest';
+import { buildAction } from 'OLD/action.build';
+import { upgradeAction } from 'OLD/action.upgrade';
 
 export const JOB_HARVEST: jobType = 'harvest';
 export const JOB_BUILD: jobType = 'build';
@@ -22,7 +22,7 @@ export class HarvestJob implements Job {
   constructor(objectid: string) {
     this.targetobjectId = objectid;
   }
-  public jobaction = (creep: Creep) =>
+  public jobAction = (creep: Creep) =>
     harvestAction(this.targetobjectId, creep);
 
   public targetobjectId: string;
@@ -32,7 +32,7 @@ export class buildJob implements Job {
   constructor(objectid: string) {
     this.targetobjectId = objectid;
   }
-  public jobaction = (creep: Creep) => {
+  public jobAction = (creep: Creep) => {
     buildAction(this.targetobjectId, creep);
   };
   // make a new fucntion here taht does build action and takes the targetobject id and does it
@@ -42,7 +42,7 @@ export class upgradeJob implements Job {
   constructor(objectid: string) {
     this.targetobjectId = objectid;
   }
-  public jobaction = (creep: Creep) => {
+  public jobAction = (creep: Creep) => {
     upgradeAction(this.targetobjectId, creep);
   };
   public targetobjectId: string;

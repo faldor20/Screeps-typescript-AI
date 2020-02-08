@@ -43,7 +43,7 @@ interface creepType {
 } */
 interface Job {
   targetobjectId: string;
-  jobaction(creep: Creep): void;
+  jobAction(creep: Creep): void;
 }
 /*  interface harvestJob extends job
 {

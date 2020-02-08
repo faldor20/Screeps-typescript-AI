@@ -1,11 +1,11 @@
-import { IHarvestAction } from './';
+import { IActionHarvest } from '.';
 
-export const HarvestAction: IHarvestAction = {
+export const ActionHarvest: IActionHarvest = {
     name: 'Harvest Action',
     run: (targetID: string, creep: Creep) => {
         if (creep.carry.energy < creep.carryCapacity) {
             const creepmem: CreepMemory = creep.memory;
-            const source: Source | null = Game.getObjectById(targetID);
+            const source: Source | null = Game.getObjectById(targetId);
             if (source != null) {
                 console.log(creep.harvest(source));
                 //  console.log("harvester found source");
@@ -39,7 +39,11 @@ export const HarvestAction: IHarvestAction = {
                 }
             } else {
                 creep.memory.job = undefined;
+<<<<<<< HEAD:src/Actions/HarvestAction/HarvestAction.ts
                 creep.room.memory.harvestPoints.Release(targetID);
+=======
+                creep.room.memory.harvestPoints.free.push(targetId);
+>>>>>>> Refactor:src/Actions/ActionHarvest/ActionHarvest.ts
                 console.log('harvester giving up job');
             }
         }

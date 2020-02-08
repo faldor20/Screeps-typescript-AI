@@ -1,10 +1,11 @@
-import { buildJob, creepTypes, HarvestJob, jobType, upgradeJob } from "creeps.jobs";
+import { buildJob, creepTypes, HarvestJob, jobType, upgradeJob } from "OLD/creeps.jobs";
 
 import * as sourceScanner from "./Sourcemanager";
 const JOB_HARVEST: jobType = "harvest";
 const JOB_BUILD: jobType = "build";
 const JOB_UPGRADE: jobType = "upgrade";
 const JOB_REPAIR: jobType = "repair";
+
 function mainLoop() {
   CleanMemory();
   /*  toolsourceScanner(Game.rooms[0]);*/
@@ -16,18 +17,18 @@ function CheckRooms() {
   for (const name in Game.rooms) {
     const room = Game.rooms[name];
     const roomMem = room.memory;
-    const buildsites: ConstructionSite<BuildableStructureConstant>[] = room.find(FIND_CONSTRUCTION_SITES);
-    if (buildsites) {
+    const buildSites: ConstructionSite<BuildableStructureConstant>[] = room.find(FIND_CONSTRUCTION_SITES);
+    if (buildSites) {
       if (roomMem.jobs !== undefined) {
-        if (buildsites.length > 0 && buildsites.length !== roomMem.jobs.build.length) {
-          const newsites: buildJob[] = [];
-          buildsites.forEach(site => {
-            newsites.push(new buildJob(site.id));
+        if (buildSites.length > 0 && buildSites.length !== roomMem.jobs.build.length) {
+          const newSites: buildJob[] = [];
+          buildSites.forEach(site => {
+            newSites.push(new buildJob(site.id));
           });
-          roomMem.jobs.build = newsites;
+          roomMem.jobs.build = newSites;
         }
       } else {
-        console.log("jobs mem doesnt exist");
+        console.log("jobs mem doesn't exist");
       }
     }
     if (roomMem.jobs[JOB_UPGRADE].length < 3) {
@@ -39,10 +40,10 @@ function CheckRooms() {
       sourceScanner.scanRoom(room);
     }
     if (room.energyAvailable < room.energyCapacityAvailable && roomMem.jobs.harvest.length < roomMem.harvestPoints.count) {
-      const harvistPoint = roomMem.harvestPoints.free.pop();
-      if (harvistPoint) {
+      const harvestPoint = roomMem.harvestPoints.free.pop();
+      if (harvestPoint) {
         //   roomMem.harvestPoints.taken.push(harvistPoint);
-        roomMem.jobs.harvest.push(new HarvestJob(harvistPoint));
+        roomMem.jobs.harvest.push(new HarvestJob(harvestPoint));
       }
     }
     // console.log(room);
@@ -73,15 +74,15 @@ function CheckCreeps() {
       if (creep.memory.job == null) {
         const jobPriorities: string[] = creep.memory.type.jobTypePriority;
         jobPriorities.forEach(jobtype => {
-          const newjob: Job | undefined = creep.room.memory.jobs[jobtype].pop();
-          if (newjob != null) {
-            creep.memory.job = newjob;
+          const newJob: Job | undefined = creep.room.memory.jobs[jobtype].pop();
+          if (newJob != null) {
+            creep.memory.job = newJob;
             return;
           }
         });
       } else {
         if (creep.memory.job) {
-          creep.memory.job.jobaction(creep);
+          creep.memory.job.jobAction(creep);
         }
       }
     }
@@ -98,15 +99,15 @@ function CleanMemory() {
         const source: Source | null = Game.getObjectById(creepMemory.worker.targetobjectID); // its a strong but it throws ana error
         if (source != null) {
           const id: string = source.id;
-          const roomjobs: {
+          const roomJobs: {
             free: string[];
             taken: string[];
           } =
             source.room.memory.harvestPoints;
-          roomjobs.taken.every((value: string, index: number) => {
+          roomJobs.taken.every((value: string, index: number) => {
             if (id === value) {
-              roomjobs.taken.splice(index, 1);
-              roomjobs.free.push(value);
+              roomJobs.taken.splice(index, 1);
+              roomJobs.free.push(value);
               return true;
             } else {
               return false;

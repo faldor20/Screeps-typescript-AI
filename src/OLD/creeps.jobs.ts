@@ -1,5 +1,4 @@
 import { Dictionary } from 'lodash';
-import { run } from '../../.history/src/role.upgrader_20180531115439';
 import { harvestAction } from 'OLD/action.harvest';
 import { buildAction } from 'OLD/action.build';
 import { upgradeAction } from 'OLD/action.upgrade';
@@ -20,32 +19,32 @@ const JOB_UPGRADE: jobType = { creepAction: upgradeAction }; */
 
 export class HarvestJob implements Job {
   constructor(objectid: string) {
-    this.targetobjectId = objectid;
+    this.targetObjectId = objectid;
   }
   public jobAction = (creep: Creep) =>
-    harvestAction(this.targetobjectId, creep);
+    harvestAction(this.targetObjectId, creep);
 
-  public targetobjectId: string;
+  public targetObjectId: string;
 }
 
 export class buildJob implements Job {
   constructor(objectid: string) {
-    this.targetobjectId = objectid;
+    this.targetObjectId = objectid;
   }
   public jobAction = (creep: Creep) => {
-    buildAction(this.targetobjectId, creep);
+    buildAction(this.targetObjectId, creep);
   };
   // make a new fucntion here taht does build action and takes the targetobject id and does it
-  public targetobjectId: string;
+  public targetObjectId: string;
 }
 export class upgradeJob implements Job {
   constructor(objectid: string) {
-    this.targetobjectId = objectid;
+    this.targetObjectId = objectid;
   }
   public jobAction = (creep: Creep) => {
-    upgradeAction(this.targetobjectId, creep);
+    upgradeAction(this.targetObjectId, creep);
   };
-  public targetobjectId: string;
+  public targetObjectId: string;
 }
 export namespace creepTypes {
   export const harvester: creepType = {

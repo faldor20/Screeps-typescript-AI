@@ -38,9 +38,10 @@ function CheckRooms() {
     }
     if (roomMem.harvestPoints == null) {
       sourceScanner.scanRoom(room);
-    }
+	}
+
     if (room.energyAvailable < room.energyCapacityAvailable && roomMem.jobs.harvest.length < roomMem.harvestPoints.count) {
-      const harvestPoint = roomMem.harvestPoints.free.pop();
+      const harvestPoint = roomMem.harvestPoints.GetFree();
       if (harvestPoint) {
         //   roomMem.harvestPoints.taken.push(harvistPoint);
         roomMem.jobs.harvest.push(new HarvestJob(harvestPoint));
@@ -98,11 +99,11 @@ function CleanMemory() {
         // else {
         const source: Source | null = Game.getObjectById(creepMemory.worker.targetobjectID); // its a strong but it throws ana error
         if (source != null) {
-          const id: string = source.id;
-          const roomJobs: {
-            free: string[];
-            taken: string[];
-          } =
+		  const id: string = source.id;
+
+//I am 90% sure this was all just to cleanup incase of harvestpoints that got missed
+
+        /*   const roomJobs: HarvestPoints =
             source.room.memory.harvestPoints;
           roomJobs.taken.every((value: string, index: number) => {
             if (id === value) {
@@ -112,7 +113,7 @@ function CleanMemory() {
             } else {
               return false;
             }
-          });
+          }); */
         }
         // }
       } else if (creepMemory.type === creepTypes.harvester) {

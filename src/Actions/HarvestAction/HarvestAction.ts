@@ -2,7 +2,7 @@ import { IHarvestAction } from './';
 
 export const HarvestAction: IHarvestAction = {
     name: 'Harvest Action',
-    run: (targetId: string, creep: Creep) => {
+    run: (targetID: string, creep: Creep) => {
         if (creep.carry.energy < creep.carryCapacity) {
             const creepmem: CreepMemory = creep.memory;
             const source: Source | null = Game.getObjectById(targetID);
@@ -39,7 +39,7 @@ export const HarvestAction: IHarvestAction = {
                 }
             } else {
                 creep.memory.job = undefined;
-                creep.room.memory.harvestPoints.free.push(targetID);
+                creep.room.memory.harvestPoints.Release(targetID);
                 console.log('harvester giving up job');
             }
         }

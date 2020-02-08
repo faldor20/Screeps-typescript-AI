@@ -1,21 +1,22 @@
 export function harvestAction(targetID: string, creep: Creep) {
-  // console.log("SASD");
   if (creep.carry.energy < creep.carryCapacity) {
+    //This section handles fidning and collecting energy
     const creepmem: CreepMemory = creep.memory;
     const source: Source | null = Game.getObjectById(targetID);
     if (source != null) {
       console.log(creep.harvest(source));
       //  console.log("harvester found source");
       if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
-        console.log('harvester moving');
-        creep.moveTo(source.pos, { visualizePathStyle: { stroke: '#ffaa00' } });
+        console.log("harvester moving");
+        creep.moveTo(source.pos, { visualizePathStyle: { stroke: "#ffaa00" } });
       } else {
-        console.log('harvester harvested');
+        console.log("harvester harvested");
       }
     } else {
-      console.log('harvester didnt get source');
+      console.log("harvester didnt get source");
     }
   } else {
+    //This section handles dropping of collected energy
     const targets = creep.room.find(FIND_STRUCTURES, {
       filter: (structure: Structure) => {
         if (
@@ -24,20 +25,21 @@ export function harvestAction(targetID: string, creep: Creep) {
           structure.structureType === STRUCTURE_TOWER
         ) {
           const storageStructure: HasStorage = structure as HasStorage;
-          return storageStructure.energy < storageStructure.energyCapacity;
+          return storageStructure.energy < storageStructure.energyCapacity; //why is this false
         }
         return false;
       }
-    });
+	});
+
     if (targets.length > 0) {
       creep.transfer(targets[0], RESOURCE_ENERGY);
       if (creep.transfer(targets[0], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-        creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
+        creep.moveTo(targets[0], { visualizePathStyle: { stroke: "#ffffff" } });
       }
     } else {
       creep.memory.job = undefined;
-      creep.room.memory.harvestPoints.free.push(targetID);
-      console.log('harvester giving up job');
+      creep.room.memory.harvestPoints.Release(targetID);
+      console.log("harvester giving up job");
     }
   }
 }

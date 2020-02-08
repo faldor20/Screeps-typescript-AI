@@ -16,9 +16,10 @@ interface SpawnMemory {
 }
 interface RoomMemory {
   jobs: { [key: string]: Job[] };
-  harvestPoints: { free: string[]; taken: string[]; count: number };
+  harvestPoints:HarvestPoints
   [name: string]: any;
 }
+
 /*  interface creepType
 {
     priority:jobType[];
@@ -42,7 +43,7 @@ interface creepType {
   //targetobjectID: string
 } */
 interface Job {
-  targetobjectId: string;
+  targetObjectId: string;
   jobAction(creep: Creep): void;
 }
 /*  interface harvestJob extends job

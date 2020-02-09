@@ -1,11 +1,11 @@
 import { harvestAction } from "OLD/creeps.jobs";
+//This function scans the room and finds all the sources, It then finds all the locations around each source a screep can stand and harvest from.
+//once it has thoughs it populates the rooms harvestPostions list
 
-export function scanRoom(room: Room) {
-  room.memory = Memory.rooms[room.name];
-  room.memory.harvestPoints = new HarvestPoints();
-  room.memory.jobs = { build: [], harvest: [], upgrade: [], repair: [] };
+export function scanRoom(room: Room):string[] {
+
   let sources: Source[] = room.find(FIND_SOURCES);
-  let jobs: string[] = [];
+  let walkableTiles: string[] = [];
   sources.forEach(source => {
     let pos: RoomPosition = source.pos;
     let objectsAround: Terrain[] = [];
@@ -21,8 +21,9 @@ export function scanRoom(room: Room) {
     objectsAround[7] = Game.map.getTerrainAt(pos.x + 1, pos.y - 1, roomName);
     objectsAround.forEach(spot => {
       if (spot != "wall") {
-        collectionSpotCount++;
-        jobs.push(source.id);
+		collectionSpotCount++;
+		//we only need to push more instances of the position not the
+        walkableTiles.push(source.id);
       }
     });
     //  room.memory.sources={sourceInfo}
@@ -35,13 +36,25 @@ export function scanRoom(room: Room) {
          = { free: jobs, taken: [] }; */
   //let
 
-  /* room.memory.harvestPoints.free = jobs;
-  room.memory.harvestPoints.count = jobs.length; */
 
-  room.memory.jobs.build = [];
-  room.memory.jobs.harvest = [];
-  room.memory.jobs.upgrade = [];
-  room.memory.jobs.repair = [];
+}
+
+function SetupRoomMemory(room:Room) {
+	room.memory = Memory.rooms[room.name];
+	room.memory.harvestPositions = new InteractionPositions();
+	room.memory.jobs = { build: [], harvest: [], upgrade: [], repair: [] };
+
+
+
+
+	room.memory.harvestPositions = scanRoom;
+	room.memory.harvestPositions.count = walkableTiles.length;
+	room.memory.sources.
+
+	room.memory.jobs.build = [];
+	room.memory.jobs.harvest = [];
+	room.memory.jobs.upgrade = [];
+	room.memory.jobs.repair = [];
 }
 /* class jobs {
       constructor(sourceID:string,collectionPoints:number,currentlyCollecting:number) {

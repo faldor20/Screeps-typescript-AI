@@ -38,12 +38,10 @@ export const ActionHarvest: IActionHarvest = {
                 creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
                 }
             } else {
-                creep.memory.job = undefined;
-<<<<<<< HEAD:src/Actions/HarvestAction/HarvestAction.ts
+				creep.memory.job = undefined;
+
                 creep.room.memory.harvestPoints.Release(targetID);
-=======
-                creep.room.memory.harvestPoints.free.push(targetId);
->>>>>>> Refactor:src/Actions/ActionHarvest/ActionHarvest.ts
+
                 console.log('harvester giving up job');
             }
         }

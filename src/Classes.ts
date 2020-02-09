@@ -1,5 +1,7 @@
-class HarvestPoints {
-  private free: Set<string> = new Set<string>();
+/*
+class HarvestPositions {
+	public Positions:{[objectID:string] free:number, taken:number }
+  private free: {<string>} = new Set<string>();
   private taken: Set<string> = new Set<string>();
 
   public get count(): number {
@@ -24,4 +26,25 @@ class HarvestPoints {
     return null;
   }
 }
+ */
 
+
+class InteractionPositions {
+  private _free: number;
+  private _taken: number;
+
+  public get free(): number {
+    return this._free;
+  }
+  public get taken(): number {
+    return this._taken;
+  }
+  public Take() {
+    this._free--;
+    this._taken++;
+  }
+  public Release(point: string) {
+    this._free++;
+    this._taken--;
+  }
+}

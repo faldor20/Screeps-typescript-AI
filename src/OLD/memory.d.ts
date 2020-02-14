@@ -8,6 +8,20 @@ interface CreepMemory {
   type: creepType;
   [name: string]: any;
 }
+//i am unsure if changing memory is done like this:
+/* interface OURMemory extends Memory{
+	builderCount:number;
+	harvesterCount:number;
+upgraderCount:number;
+} */
+//or liek this
+interface Memory {
+
+	builderCount:number;
+	harvesterCount:number;
+upgraderCount:number
+}
+
 interface FlagMemory {
   [name: string]: any;
 }
@@ -16,7 +30,6 @@ interface SpawnMemory {
 }
 interface RoomMemory {
   jobs: { [key: string]: Job[] };
-  harvestPoints:HarvestPoints
   [name: string]: any;
 }
 

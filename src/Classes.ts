@@ -28,11 +28,16 @@ class HarvestPositions {
 }
  */
 
-
 class InteractionPositions {
+  constructor(free: number) {
+    this._free = free;
+    this._taken = 0;
+  }
   private _free: number;
   private _taken: number;
-
+  public get count(): number {
+    return this._taken + this._free;
+  }
   public get free(): number {
     return this._free;
   }
